@@ -36,27 +36,11 @@ $(document).on("ready", function(){
 	  		repos.updated_at = moment(repos.updated_at).fromNow();
 
 	  		var htmlRightString = templateRight(repos)
-
+	  		
 	  		$("#right-spot").append(htmlRightString)
+	  		})
 	  		
 
-	  			$.ajax({
-	  			url: repos.url,
-	  			method: "GET",
-	  			data: {
-	  				access_token: access_token
-	  			},
-	  				success:function(sourceURLData) {
-	  					var htmlRepoString = templateRight({
-	  					stars: repos.stargazers_count,
-	  					forks: sourceURLData.network_count
-	  					})
-
-	  					$(".stargazers_count").append(htmlRepoString)
-	  				}	
-				})  	
-	 		})
-	 	}
-
+		}
 	})
-})
+})	
