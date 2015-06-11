@@ -31,19 +31,32 @@ $(document).on("ready", function(){
 	    access_token: access_token
 	  },
 	  	success: function(data) {
+	  		
 	  		_.each(data, function(repos) {
-	  		repos.updated_at = moment(data.updated_at).fromNow();
+	  		repos.updated_at = moment(repos.updated_at).fromNow();
 
 	  		var htmlRightString = templateRight(repos)
-	  		repos.network_count = data.network_count
 
 	  		$("#right-spot").append(htmlRightString)
-	  		})
-	  	}
+	  		
+
+	  			$.ajax({
+	  			url: repos.url,
+	  			method: "GET",
+	  			data: {
+	  				access_token: access_token
+	  			},
+	  				success:function(sourceURLData) {
+	  					var htmlRepoString = templateRight({
+	  					stars: repos.stargazers_count,
+	  					forks: sourceURLData.network_count
+	  					})
+
+	  					$(".stargazers_count").append(htmlRepoString)
+	  				}	
+				})  	
+	 		})
+	 	}
+
 	})
-
-
-
-
-
-})	
+})
